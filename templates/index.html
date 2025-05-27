@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>语音识别转录</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+        .upload-box { border: 2px dashed #ccc; padding: 20px; text-align: center; margin: 20px 0; }
+        .btn { background: #4285f4; color: white; padding: 10px 15px; border: none; cursor: pointer; }
+        #file-info { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>语音识别转录</h1>
+    <p>上传视频或音频文件，自动转换为文字</p>
+    
+    <div class="upload-box" id="dropZone">
+        <p>拖拽文件到此处或</p>
+        <button class="btn" onclick="document.getElementById('fileInput').click()">选择文件</button>
+        <input type="file" id="fileInput" style="display:none;" accept=".mp4,.mp3,.wav">
+        <div id="file-info"></div>
+    </div>
+    
+    <p>支持 MP4, MP3, WAV 等格式，最大 100MB</p>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('file-info');
+
+        // Handle drag and drop
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = '#4285f4';
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.style.borderColor = '#ccc';
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = '#ccc';
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                handleUpload();
+            }
+        });
+
+        // Handle file selection
+        fileInput.addEventListener('change', handleUpload);
+
+        async function handleUpload() {
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            fileInfo.innerHTML = `Selected: ${file.name} (${(file.size/1024/1024).toFixed(2)}MB)`;
+            
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('/api/transcribe', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    fileInfo.innerHTML += `<br>Status: ${result.status}`;
+                    fileInfo.innerHTML += `<br>Saved to: <a href="${result.path}" target="_blank">${result.filename}</a>`;
+                } else {
+                    fileInfo.innerHTML += `<br>Error: ${result.error}`;
+                }
+            } catch (error) {
+                fileInfo.innerHTML += `<br>Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
