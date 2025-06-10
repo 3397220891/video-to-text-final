@@ -227,6 +227,175 @@ export default function SpeechRecognition() {
     }
   }
 
+  // 根据不同文件夹显示不同的转录文件
+  const getFolderFiles = (folderName: string) => {
+    const baseFiles = {
+      工作文档: [
+        {
+          name: "产品规划会议录音.mp3",
+          size: "15.2 MB",
+          type: "audio",
+          date: "2024-01-15",
+          duration: "25:30",
+          source: "录音",
+          preview: "今天我们讨论了新产品的功能规划，包括用户界面设计、核心功能模块...",
+        },
+        {
+          name: "客户需求分析访谈.wav",
+          size: "45.8 MB",
+          type: "audio",
+          date: "2024-01-14",
+          duration: "18:22",
+          source: "录音",
+          preview: "感谢您接受我们的访谈。首先想了解一下您对我们产品的整体印象...",
+        },
+        {
+          name: "团队周会记录.aac",
+          size: "12.3 MB",
+          type: "audio",
+          date: "2024-01-13",
+          duration: "32:15",
+          source: "录音",
+          preview: "本周工作总结和下周计划安排，各部门进展汇报...",
+        },
+        {
+          name: "项目启动会议.mp4",
+          size: "156.7 MB",
+          type: "video",
+          date: "2024-01-12",
+          duration: "45:15",
+          source: "导入",
+          preview: "项目启动会议，讨论项目目标、时间安排和资源分配...",
+        },
+        {
+          name: "季度总结会议.mkv",
+          size: "234.5 MB",
+          type: "video",
+          date: "2024-01-11",
+          duration: "38:45",
+          source: "导入",
+          preview: "季度工作总结，各部门成果汇报和下季度规划讨论...",
+        },
+      ],
+      个人笔记: [
+        {
+          name: "英语学习课程.mp4",
+          size: "89.3 MB",
+          type: "video",
+          date: "2024-01-14",
+          duration: "12:45",
+          source: "导入",
+          preview: "Hello everyone, welcome to today's English lesson. We will be covering...",
+        },
+        {
+          name: "读书笔记录音.flac",
+          size: "67.2 MB",
+          type: "audio",
+          date: "2024-01-13",
+          duration: "15:30",
+          source: "录音",
+          preview: "今天读了关于人工智能的书籍，记录一些重要的观点和思考...",
+        },
+        {
+          name: "学习心得分享.ogg",
+          size: "8.9 MB",
+          type: "audio",
+          date: "2024-01-12",
+          duration: "20:15",
+          source: "录音",
+          preview: "最近学习的新技术总结，包括实践经验和遇到的问题...",
+        },
+        {
+          name: "在线课程录屏.avi",
+          size: "445.8 MB",
+          type: "video",
+          date: "2024-01-11",
+          duration: "55:20",
+          source: "导入",
+          preview: "在线编程课程录屏，包含代码演示和讲解内容...",
+        },
+      ],
+      项目资料: [
+        {
+          name: "技术分享会议.mov",
+          size: "178.4 MB",
+          type: "video",
+          date: "2024-01-12",
+          duration: "45:15",
+          source: "导入",
+          preview: "今天分享的主题是关于人工智能在语音识别领域的最新进展...",
+        },
+        {
+          name: "需求评审会议.mp3",
+          size: "22.1 MB",
+          type: "audio",
+          date: "2024-01-11",
+          duration: "35:40",
+          source: "录音",
+          preview: "产品需求评审，讨论功能优先级和技术实现方案...",
+        },
+        {
+          name: "架构设计讨论.wav",
+          size: "78.6 MB",
+          type: "audio",
+          date: "2024-01-10",
+          duration: "28:30",
+          source: "录音",
+          preview: "系统架构设计方案讨论，包括技术选型和性能考虑...",
+        },
+        {
+          name: "用户调研访谈.wmv",
+          size: "267.3 MB",
+          type: "video",
+          date: "2024-01-09",
+          duration: "52:20",
+          source: "导入",
+          preview: "用户调研访谈，了解用户需求和使用习惯...",
+        },
+      ],
+      会议记录: [
+        {
+          name: "月度例会录音.aac",
+          size: "18.7 MB",
+          type: "audio",
+          date: "2024-01-15",
+          duration: "42:30",
+          source: "录音",
+          preview: "月度工作总结和下月计划，各部门汇报进展情况...",
+        },
+        {
+          name: "董事会会议.flac",
+          size: "156.9 MB",
+          type: "audio",
+          date: "2024-01-10",
+          duration: "65:15",
+          source: "录音",
+          preview: "董事会季度会议，讨论公司发展战略和重要决策...",
+        },
+        {
+          name: "部门协调会议.mp3",
+          size: "14.8 MB",
+          type: "audio",
+          date: "2024-01-08",
+          duration: "25:45",
+          source: "录音",
+          preview: "跨部门协调会议，解决项目推进中的问题和冲突...",
+        },
+        {
+          name: "客户沟通会议.mp4",
+          size: "198.2 MB",
+          type: "video",
+          date: "2024-01-05",
+          duration: "38:20",
+          source: "导入",
+          preview: "客户沟通会议，收集客户反馈和需求建议...",
+        },
+      ],
+    }
+
+    return baseFiles[folderName] || baseFiles["工作文档"]
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 flex">
       {/* 侧边栏保持不变 */}
@@ -1228,7 +1397,21 @@ export default function SpeechRecognition() {
                     </svg>
                     <div>
                       <h1 className="text-2xl font-bold text-gray-900">{selectedFolder}</h1>
-                      <p className="text-sm text-gray-500">15 个文件 • 总计 245 MB</p>
+                      <p className="text-sm text-gray-500">
+                        {(() => {
+                          const folderFiles = getFolderFiles(selectedFolder)
+                          return folderFiles.length
+                        })()} 个文件 • 总计 {(() => {
+                          const folderFiles = getFolderFiles(selectedFolder)
+                          return folderFiles
+                            .reduce((total, file) => {
+                              const size = Number.parseFloat(file.size)
+                              const unit = file.size.includes("MB") ? size : size / 1000
+                              return total + unit
+                            }, 0)
+                            .toFixed(1)
+                        })()} MB
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -1285,97 +1468,98 @@ export default function SpeechRecognition() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {/* 示例文件 */}
-                  {[
-                    { name: "项目计划.docx", size: "2.5 MB", type: "document", date: "2024-01-15" },
-                    { name: "会议录音.mp3", size: "15.2 MB", type: "audio", date: "2024-01-14" },
-                    { name: "设计稿.png", size: "8.7 MB", type: "image", date: "2024-01-13" },
-                    { name: "数据分析.xlsx", size: "1.8 MB", type: "spreadsheet", date: "2024-01-12" },
-                    { name: "演示文稿.pptx", size: "12.3 MB", type: "presentation", date: "2024-01-11" },
-                  ].map((file, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                          {file.type === "document" && (
-                            <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                              <path
-                                fillRule="evenodd"
-                                d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
-                          )}
-                          {file.type === "audio" && (
-                            <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                              <path
-                                fillRule="evenodd"
-                                d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM15.657 6.343a1 1 0 011.414 0A9.972 9.972 0 0119 12a9.972 9.972 0 01-1.929 5.657 1 1 0 11-1.414-1.414A7.971 7.971 0 0017 12c0-2.21-.896-4.21-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 12a5.984 5.984 0 01-.757 2.828 1 1 0 11-1.415-1.656A3.989 3.989 0 0013 12a3.989 3.989 0 00-.172-1.172 1 1 0 010-1.657z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
-                          )}
-                          {file.type === "image" && (
-                            <svg className="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-                              <path
-                                fillRule="evenodd"
-                                d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
-                          )}
-                          {file.type === "spreadsheet" && (
-                            <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                              <path
-                                fillRule="evenodd"
-                                d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
-                          )}
-                          {file.type === "presentation" && (
-                            <svg className="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
-                              <path
-                                fillRule="evenodd"
-                                d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
-                          )}
+                  {/* 根据不同文件夹显示不同的转录文件 */}
+                  {(() => {
+                    const folderFiles = getFolderFiles(selectedFolder)
+                    return folderFiles.map((file, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                            {file.type === "transcription" && (
+                              <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                  fillRule="evenodd"
+                                  d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            )}
+                            {file.type === "audio" && (
+                              <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                  fillRule="evenodd"
+                                  d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM15.657 6.343a1 1 0 011.414 0A9.972 9.972 0 0119 12a9.972 9.972 0 01-1.929 5.657 1 1 0 11-1.414-1.414A7.971 7.971 0 0017 12c0-2.21-.896-4.21-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 12a5.984 5.984 0 01-.757 2.828 1 1 0 11-1.415-1.656A3.989 3.989 0 0013 12a3.989 3.989 0 00-.172-1.172 1 1 0 010-1.657z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            )}
+                            {file.type === "video" && (
+                              <svg className="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                  fillRule="evenodd"
+                                  d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm12.553 1.106A1 1 0 0116 8v4a1 1 0 01-1.447.894l-3-1.5a1 1 0 010-1.788l3-1.5z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            )}
+                            {file.type === "notes" && (
+                              <svg className="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                                <path
+                                  fillRule="evenodd"
+                                  d="M4 5a2 2 0 012-2v1a2 2 0 002 2h6a2 2 0 002-2V3a2 2 0 012 2v6.586A2 2 0 0117.414 13L16 14.414V17a2 2 0 01-2 2H6a2 2 0 01-2-2v-2.586L2.586 13A2 2 0 012 11.414V5z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            )}
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-1">
+                              <h3 className="font-semibold text-gray-900">{file.name}</h3>
+                              <span
+                                className={`px-2 py-1 text-xs rounded-full ${
+                                  file.source === "录音" ? "bg-red-100 text-red-700" : "bg-blue-100 text-blue-700"
+                                }`}
+                              >
+                                {file.source}
+                              </span>
+                            </div>
+                            <p className="text-sm text-gray-600 mb-2 line-clamp-2">{file.preview}</p>
+                            <div className="flex items-center gap-4 text-xs text-gray-500">
+                              <span>{file.date}</span>
+                              <span>时长: {file.duration}</span>
+                              <span>{file.size}</span>
+                            </div>
+                          </div>
                         </div>
-                        <div>
-                          <p className="font-medium text-gray-900">{file.name}</p>
-                          <p className="text-sm text-gray-500">
-                            {file.size} • {file.date}
-                          </p>
+                        <div className="flex items-center gap-2">
+                          <Button variant="outline" size="sm">
+                            <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                              <path
+                                fillRule="evenodd"
+                                d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                            查看
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            <Download className="w-4 w-4 mr-2" />
+                            下载
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                            </svg>
+                          </Button>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Button variant="outline" size="sm">
-                          <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                            <path
-                              fillRule="evenodd"
-                              d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          预览
-                        </Button>
-                        <Button variant="outline" size="sm">
-                          <Download className="w-4 h-4 mr-2" />
-                          下载
-                        </Button>
-                        <Button variant="outline" size="sm">
-                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                          </svg>
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
+                    ))
+                  })()}
                 </div>
               </CardContent>
             </Card>
