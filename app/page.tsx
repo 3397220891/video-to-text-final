@@ -34,39 +34,39 @@ export default function SpeechRecognition() {
   const [historyRecords, setHistoryRecords] = useState([
     {
       id: 1,
-      title: "会议记录 - 产品讨论",
+      title: "Meeting Notes - Product Discussion",
       date: "2024-01-15",
       time: "14:30",
       duration: "25:30",
-      type: "录音",
-      preview: "今天我们讨论了新产品的功能规划，包括用户界面设计、核心功能模块...",
+      type: "Recording",
+      preview: "Today we discussed the new product's feature planning, including UI design and core modules...",
     },
     {
       id: 2,
-      title: "英语学习视频转录",
+      title: "English Learning Video Transcription",
       date: "2024-01-14",
       time: "09:15",
       duration: "12:45",
-      type: "导入",
+      type: "Import",
       preview: "Hello everyone, welcome to today's English lesson. We will be covering...",
     },
     {
       id: 3,
-      title: "客户访谈记录",
+      title: "Customer Interview Notes",
       date: "2024-01-13",
       time: "16:20",
       duration: "18:22",
-      type: "录音",
-      preview: "感谢您接受我们的访谈。首先想了解一下您对我们产品的整体印象...",
+      type: "Recording",
+      preview: "Thank you for joining our interview. First, we'd like to understand your overall impression of our product...",
     },
     {
       id: 4,
-      title: "技术分享会议",
+      title: "Tech Sharing Meeting",
       date: "2024-01-12",
       time: "10:00",
       duration: "45:15",
-      type: "导入",
-      preview: "今天分享的主题是关于人工智能在语音识别领域的最新进展...",
+      type: "Import",
+      preview: "Today's topic is the latest progress of AI in the field of speech recognition...",
     },
   ])
 
@@ -85,13 +85,13 @@ export default function SpeechRecognition() {
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0]
     if (selectedFile) {
-      // 检查文件类型
+      // Check file type
       if (selectedFile.type.startsWith("video/") || selectedFile.type.startsWith("audio/")) {
         setFile(selectedFile)
         setError("")
         setTranscription("")
       } else {
-        setError("请选择视频或音频文件")
+        setError("Please select a video or audio file")
       }
     }
   }
@@ -105,7 +105,7 @@ export default function SpeechRecognition() {
         setError("")
         setTranscription("")
       } else {
-        setError("请选择视频或音频文件")
+        setError("Please select a video or audio file")
       }
     }
   }
@@ -129,7 +129,7 @@ export default function SpeechRecognition() {
       formData.append("extractKeyPoints", extractKeyPoints.toString())
       formData.append("generateNotes", generateNotes.toString())
 
-      // 模拟上传进度
+      // Simulated upload progress
       const progressInterval = setInterval(() => {
         setUploadProgress((prev) => {
           if (prev >= 90) {
@@ -149,7 +149,7 @@ export default function SpeechRecognition() {
       setUploadProgress(100)
 
       if (!response.ok) {
-        throw new Error("转录失败")
+        throw new Error("Transcription failed")
       }
 
       const result = await response.json()
@@ -159,7 +159,7 @@ export default function SpeechRecognition() {
         setKeyPoints(result.keyPoints)
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "转录过程中出现错误")
+      setError(err instanceof Error ? err.message : "An error occurred during transcription")
     } finally {
       setIsUploading(false)
       setUploadProgress(0)
@@ -215,192 +215,192 @@ export default function SpeechRecognition() {
       })
 
       if (!response.ok) {
-        throw new Error("生成笔记失败")
+        throw new Error("Failed to generate notes")
       }
 
       const result = await response.json()
       setClassNotes(result.notes)
     } catch (err) {
-      setError(err instanceof Error ? err.message : "生成笔记过程中出现错误")
+      setError(err instanceof Error ? err.message : "An error occurred while generating notes")
     } finally {
       setIsGeneratingNotes(false)
     }
   }
 
-  // 根据不同文件夹显示不同的转录文件
+  // Files by folder (demo data)
   const getFolderFiles = (folderName: string) => {
     const baseFiles = {
-      工作文档: [
+      WorkDocs: [
         {
-          name: "产品规划会议录音.mp3",
+          name: "Product Planning Meeting.mp3",
           size: "15.2 MB",
           type: "audio",
           date: "2024-01-15",
           duration: "25:30",
-          source: "录音",
-          preview: "今天我们讨论了新产品的功能规划，包括用户界面设计、核心功能模块...",
+          source: "Recording",
+          preview: "Today we discussed the new product's feature planning, including UI design and core modules...",
         },
         {
-          name: "客户需求分析访谈.wav",
+          name: "Customer Requirements Interview.wav",
           size: "45.8 MB",
           type: "audio",
           date: "2024-01-14",
           duration: "18:22",
-          source: "录音",
-          preview: "感谢您接受我们的访谈。首先想了解一下您对我们产品的整体印象...",
+          source: "Recording",
+          preview: "Thank you for joining our interview. First, we'd like to understand your overall impression of our product...",
         },
         {
-          name: "团队周会记录.aac",
+          name: "Weekly Team Meeting.aac",
           size: "12.3 MB",
           type: "audio",
           date: "2024-01-13",
           duration: "32:15",
-          source: "录音",
-          preview: "本周工作总结和下周计划安排，各部门进展汇报...",
+          source: "Recording",
+          preview: "Weekly summary and next week's plan, with progress updates from each department...",
         },
         {
-          name: "项目启动会议.mp4",
+          name: "Project Kickoff.mp4",
           size: "156.7 MB",
           type: "video",
           date: "2024-01-12",
           duration: "45:15",
-          source: "导入",
-          preview: "项目启动会议，讨论项目目标、时间安排和资源分配...",
+          source: "Import",
+          preview: "Project kickoff meeting discussing goals, timeline, and resource allocation...",
         },
         {
-          name: "季度总结会议.mkv",
+          name: "Quarterly Review.mkv",
           size: "234.5 MB",
           type: "video",
           date: "2024-01-11",
           duration: "38:45",
-          source: "导入",
-          preview: "季度工作总结，各部门成果汇报和下季度规划讨论...",
+          source: "Import",
+          preview: "Quarterly review, department reports, and next quarter planning...",
         },
       ],
-      个人笔记: [
+      PersonalNotes: [
         {
-          name: "英语学习课程.mp4",
+          name: "English Course.mp4",
           size: "89.3 MB",
           type: "video",
           date: "2024-01-14",
           duration: "12:45",
-          source: "导入",
+          source: "Import",
           preview: "Hello everyone, welcome to today's English lesson. We will be covering...",
         },
         {
-          name: "读书笔记录音.flac",
+          name: "Reading Notes Recording.flac",
           size: "67.2 MB",
           type: "audio",
           date: "2024-01-13",
           duration: "15:30",
-          source: "录音",
-          preview: "今天读了关于人工智能的书籍，记录一些重要的观点和思考...",
+          source: "Recording",
+          preview: "Read about artificial intelligence today and noted important points and thoughts...",
         },
         {
-          name: "学习心得分享.ogg",
+          name: "Study Reflections.ogg",
           size: "8.9 MB",
           type: "audio",
           date: "2024-01-12",
           duration: "20:15",
-          source: "录音",
-          preview: "最近学习的新技术总结，包括实践经验和遇到的问题...",
+          source: "Recording",
+          preview: "Recent technology learnings including practical experience and issues encountered...",
         },
         {
-          name: "在线课程录屏.avi",
+          name: "Online Course Screen Recording.avi",
           size: "445.8 MB",
           type: "video",
           date: "2024-01-11",
           duration: "55:20",
-          source: "导入",
-          preview: "在线编程课程录屏，包含代码演示和讲解内容...",
+          source: "Import",
+          preview: "Online programming course recording with code demos and explanations...",
         },
       ],
-      项目资料: [
+      ProjectMaterials: [
         {
-          name: "技术分享会议.mov",
+          name: "Tech Sharing.mov",
           size: "178.4 MB",
           type: "video",
           date: "2024-01-12",
           duration: "45:15",
-          source: "导入",
-          preview: "今天分享的主题是关于人工智能在语音识别领域的最新进展...",
+          source: "Import",
+          preview: "Latest progress of AI in speech recognition...",
         },
         {
-          name: "需求评审会议.mp3",
+          name: "Requirements Review.mp3",
           size: "22.1 MB",
           type: "audio",
           date: "2024-01-11",
           duration: "35:40",
-          source: "录音",
-          preview: "产品需求评审，讨论功能优先级和技术实现方案...",
+          source: "Recording",
+          preview: "Product requirements review, discussing priorities and technical approaches...",
         },
         {
-          name: "架构设计讨论.wav",
+          name: "Architecture Discussion.wav",
           size: "78.6 MB",
           type: "audio",
           date: "2024-01-10",
           duration: "28:30",
-          source: "录音",
-          preview: "系统架构设计方案讨论，包括技术选型和性能考虑...",
+          source: "Recording",
+          preview: "System architecture discussion including tech choices and performance considerations...",
         },
         {
-          name: "用户调研访谈.wmv",
+          name: "User Research Interview.wmv",
           size: "267.3 MB",
           type: "video",
           date: "2024-01-09",
           duration: "52:20",
-          source: "导入",
-          preview: "用户调研访谈，了解用户需求和使用习惯...",
+          source: "Import",
+          preview: "User research interview to understand needs and habits...",
         },
       ],
-      会议记录: [
+      MeetingNotes: [
         {
-          name: "月度例会录音.aac",
+          name: "Monthly Meeting.aac",
           size: "18.7 MB",
           type: "audio",
           date: "2024-01-15",
           duration: "42:30",
-          source: "录音",
-          preview: "月度工作总结和下月计划，各部门汇报进展情况...",
+          source: "Recording",
+          preview: "Monthly summary and next month's plan, progress reports from departments...",
         },
         {
-          name: "董事会会议.flac",
+          name: "Board Meeting.flac",
           size: "156.9 MB",
           type: "audio",
           date: "2024-01-10",
           duration: "65:15",
-          source: "录音",
-          preview: "董事会季度会议，讨论公司发展战略和重要决策...",
+          source: "Recording",
+          preview: "Board quarterly meeting discussing strategy and major decisions...",
         },
         {
-          name: "部门协调会议.mp3",
+          name: "Department Coordination.mp3",
           size: "14.8 MB",
           type: "audio",
           date: "2024-01-08",
           duration: "25:45",
-          source: "录音",
-          preview: "跨部门协调会议，解决项目推进中的问题和冲突...",
+          source: "Recording",
+          preview: "Cross-department coordination to resolve project issues...",
         },
         {
-          name: "客户沟通会议.mp4",
+          name: "Client Meeting.mp4",
           size: "198.2 MB",
           type: "video",
           date: "2024-01-05",
           duration: "38:20",
-          source: "导入",
-          preview: "客户沟通会议，收集客户反馈和需求建议...",
+          source: "Import",
+          preview: "Client communication meeting collecting feedback and suggestions...",
         },
       ],
     }
 
-    return baseFiles[folderName] || baseFiles["工作文档"]
+    return (baseFiles as any)[folderName] || (baseFiles as any)["WorkDocs"]
   }
 
   return (
     <div className="min-h-screen bg-gray-100 flex">
-      {/* 侧边栏保持不变 */}
+      {/* Sidebar */}
       <div className="w-80 bg-white border-r border-gray-200 flex flex-col">
-        {/* 保持原有侧边栏内容不变 */}
+        {/* Sidebar header */}
         <div className="p-4 border-b border-gray-200 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
@@ -424,7 +424,7 @@ export default function SpeechRecognition() {
               <span className="text-white font-medium">U</span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-medium text-gray-900 truncate">用户</p>
+              <p className="font-medium text-gray-900 truncate">User</p>
               <p className="text-sm text-gray-500 truncate">user@example.com</p>
             </div>
             <svg
@@ -440,7 +440,7 @@ export default function SpeechRecognition() {
             </svg>
           </div>
 
-          {/* 用户下拉菜单 */}
+          {/* User dropdown */}
           {isUserMenuOpen && (
             <div className="mt-2 py-2 bg-white border border-gray-200 rounded-lg shadow-lg">
               <button className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-gray-50 transition-colors">
@@ -451,14 +451,14 @@ export default function SpeechRecognition() {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span className="text-sm text-gray-700">账户设置</span>
+                <span className="text-sm text-gray-700">Account Settings</span>
               </button>
 
               <button className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-gray-50 transition-colors">
                 <svg className="w-4 h-4 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
                 </svg>
-                <span className="text-sm text-gray-700">邀请组员</span>
+                <span className="text-sm text-gray-700">Invite Members</span>
               </button>
 
               <button className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-gray-50 transition-colors">
@@ -469,7 +469,7 @@ export default function SpeechRecognition() {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span className="text-sm text-gray-700">帮助</span>
+                <span className="text-sm text-gray-700">Help</span>
               </button>
 
               <div className="border-t border-gray-100 my-1"></div>
@@ -482,7 +482,7 @@ export default function SpeechRecognition() {
                     clipRule="evenodd"
                   />
                 </svg>
-                <span className="text-sm text-gray-700 group-hover:text-red-600">登出</span>
+                <span className="text-sm text-gray-700 group-hover:text-red-600">Sign out</span>
               </button>
             </div>
           )}
@@ -499,7 +499,7 @@ export default function SpeechRecognition() {
                 />
               </svg>
             </div>
-            <span className="font-medium text-gray-900">获取专业版</span>
+            <span className="font-medium text-gray-900">Get Pro</span>
           </div>
         </div>
 
@@ -512,7 +512,7 @@ export default function SpeechRecognition() {
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
               </svg>
-              <span className="font-medium">首页</span>
+              <span className="font-medium">Home</span>
             </button>
 
             <button
@@ -526,7 +526,7 @@ export default function SpeechRecognition() {
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="font-medium">语音转录</span>
+              <span className="font-medium">Transcription</span>
             </button>
 
             <button className="w-full flex items-center gap-3 p-3 text-left hover:bg-gray-100 rounded-lg">
@@ -537,7 +537,7 @@ export default function SpeechRecognition() {
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="font-medium text-gray-900">搜索</span>
+              <span className="font-medium text-gray-900">Search</span>
             </button>
 
             <button className="w-full flex items-center gap-3 p-3 text-left hover:bg-gray-100 rounded-lg">
@@ -548,7 +548,7 @@ export default function SpeechRecognition() {
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="font-medium text-gray-900">应用</span>
+              <span className="font-medium text-gray-900">Apps</span>
             </button>
           </div>
 
@@ -568,7 +568,7 @@ export default function SpeechRecognition() {
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">频道</span>
+              <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">Channels</span>
             </button>
 
             {!isChannelsCollapsed && (
@@ -577,22 +577,22 @@ export default function SpeechRecognition() {
                   className="w-full flex items-center gap-2 py-1.5 px-2 text-left hover:bg-gray-100 rounded-md"
                   onClick={() => {
                     setCurrentView("channel")
-                    setSelectedChannel("通用")
+                    setSelectedChannel("General")
                   }}
                 >
                   <span className="text-xs text-gray-400">#</span>
-                  <span className="text-xs font-medium text-gray-700">通用</span>
+                  <span className="text-xs font-medium text-gray-700">General</span>
                 </button>
 
                 <button
                   className="w-full flex items-center gap-2 py-1.5 px-2 text-left hover:bg-gray-100 rounded-md"
                   onClick={() => {
                     setCurrentView("channel")
-                    setSelectedChannel("公共")
+                    setSelectedChannel("Public")
                   }}
                 >
                   <span className="text-xs text-gray-400">#</span>
-                  <span className="text-xs font-medium text-gray-700">公共</span>
+                  <span className="text-xs font-medium text-gray-700">Public</span>
                 </button>
               </div>
             )}
@@ -614,7 +614,7 @@ export default function SpeechRecognition() {
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">私信</span>
+              <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">Direct Messages</span>
             </button>
 
             {!isDirectMessagesCollapsed && (
@@ -623,44 +623,44 @@ export default function SpeechRecognition() {
                   className="w-full flex items-center gap-2 py-1.5 px-2 text-left hover:bg-gray-100 rounded-md"
                   onClick={() => {
                     setCurrentView("dm")
-                    setSelectedDM("张三")
+                    setSelectedDM("Zhang San")
                   }}
                 >
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span className="text-xs font-medium text-gray-700">张三</span>
+                  <span className="text-xs font-medium text-gray-700">Zhang San</span>
                 </button>
 
                 <button
                   className="w-full flex items-center gap-2 py-1.5 px-2 text-left hover:bg-gray-100 rounded-md"
                   onClick={() => {
                     setCurrentView("dm")
-                    setSelectedDM("李四")
+                    setSelectedDM("Li Si")
                   }}
                 >
                   <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                  <span className="text-xs font-medium text-gray-700">李四</span>
+                  <span className="text-xs font-medium text-gray-700">Li Si</span>
                 </button>
 
                 <button
                   className="w-full flex items-center gap-2 py-1.5 px-2 text-left hover:bg-gray-100 rounded-md"
                   onClick={() => {
                     setCurrentView("dm")
-                    setSelectedDM("王五")
+                    setSelectedDM("Wang Wu")
                   }}
                 >
                   <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-                  <span className="text-xs font-medium text-gray-700">王五</span>
+                  <span className="text-xs font-medium text-gray-700">Wang Wu</span>
                 </button>
 
                 <button
                   className="w-full flex items-center gap-2 py-1.5 px-2 text-left hover:bg-gray-100 rounded-md"
                   onClick={() => {
                     setCurrentView("dm")
-                    setSelectedDM("小组讨论")
+                    setSelectedDM("Group Discussion")
                   }}
                 >
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span className="text-xs font-medium text-gray-700">小组讨论</span>
+                  <span className="text-xs font-medium text-gray-700">Group Discussion</span>
                 </button>
               </div>
             )}
@@ -682,7 +682,7 @@ export default function SpeechRecognition() {
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">文件夹</span>
+              <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">Folders</span>
             </button>
 
             {!isFoldersCollapsed && (
@@ -691,52 +691,52 @@ export default function SpeechRecognition() {
                   className="w-full flex items-center gap-2 py-1.5 px-2 text-left hover:bg-gray-100 rounded-md"
                   onClick={() => {
                     setCurrentView("folder")
-                    setSelectedFolder("工作文档")
+                    setSelectedFolder("WorkDocs")
                   }}
                 >
                   <svg className="w-3 h-3 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
                   </svg>
-                  <span className="text-xs font-medium text-gray-700">工作文档</span>
+                  <span className="text-xs font-medium text-gray-700">Work Documents</span>
                 </button>
 
                 <button
                   className="w-full flex items-center gap-2 py-1.5 px-2 text-left hover:bg-gray-100 rounded-md"
                   onClick={() => {
                     setCurrentView("folder")
-                    setSelectedFolder("个人笔记")
+                    setSelectedFolder("PersonalNotes")
                   }}
                 >
                   <svg className="w-3 h-3 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
                   </svg>
-                  <span className="text-xs font-medium text-gray-700">个人笔记</span>
+                  <span className="text-xs font-medium text-gray-700">Personal Notes</span>
                 </button>
 
                 <button
                   className="w-full flex items-center gap-2 py-1.5 px-2 text-left hover:bg-gray-100 rounded-md"
                   onClick={() => {
                     setCurrentView("folder")
-                    setSelectedFolder("项目资料")
+                    setSelectedFolder("ProjectMaterials")
                   }}
                 >
                   <svg className="w-3 h-3 text-purple-500" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
                   </svg>
-                  <span className="text-xs font-medium text-gray-700">项目资料</span>
+                  <span className="text-xs font-medium text-gray-700">Project Materials</span>
                 </button>
 
                 <button
                   className="w-full flex items-center gap-2 py-1.5 px-2 text-left hover:bg-gray-100 rounded-md"
                   onClick={() => {
                     setCurrentView("folder")
-                    setSelectedFolder("会议记录")
+                    setSelectedFolder("MeetingNotes")
                   }}
                 >
                   <svg className="w-3 h-3 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
                   </svg>
-                  <span className="text-xs font-medium text-gray-700">会议记录</span>
+                  <span className="text-xs font-medium text-gray-700">Meeting Records</span>
                 </button>
               </div>
             )}
@@ -744,20 +744,20 @@ export default function SpeechRecognition() {
         </div>
       </div>
 
-      {/* 主内容区域 */}
+      {/* Main content */}
       <div className="flex-1 bg-gradient-to-br from-blue-50 to-indigo-100 p-4 overflow-auto">
         {currentView === "home" && (
           <div className="max-w-4xl mx-auto space-y-6">
             <div className="text-center space-y-2">
-              <h1 className="text-4xl font-bold text-gray-900">转录历史</h1>
-              <p className="text-lg text-gray-600">查看和管理您的语音转录记录</p>
+              <h1 className="text-4xl font-bold text-gray-900">Transcription History</h1>
+              <p className="text-lg text-gray-600">View and manage your transcription records</p>
             </div>
 
-            {/* 历史记录列表 */}
+            {/* History list */}
             <Card>
               <CardHeader>
-                <CardTitle>最近的转录</CardTitle>
-                <CardDescription>您最近的语音转录记录</CardDescription>
+                <CardTitle>Recent Transcriptions</CardTitle>
+                <CardDescription>Your recent speech transcriptions</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -772,7 +772,7 @@ export default function SpeechRecognition() {
                             <h3 className="font-semibold text-gray-900">{record.title}</h3>
                             <span
                               className={`px-2 py-1 text-xs rounded-full ${
-                                record.type === "录音" ? "bg-red-100 text-red-700" : "bg-blue-100 text-blue-700"
+                                record.type === "Recording" ? "bg-red-100 text-red-700" : "bg-blue-100 text-blue-700"
                               }`}
                             >
                               {record.type}
@@ -782,12 +782,12 @@ export default function SpeechRecognition() {
                           <div className="flex items-center gap-4 text-xs text-gray-500">
                             <span>{record.date}</span>
                             <span>{record.time}</span>
-                            <span>时长: {record.duration}</span>
+                            <span>Duration: {record.duration}</span>
                           </div>
                         </div>
                         <div className="flex gap-2 ml-4">
                           <Button variant="outline" size="sm">
-                            查看
+                            View
                           </Button>
                           <Button variant="outline" size="sm">
                             <Download className="h-4 w-4" />
@@ -800,11 +800,11 @@ export default function SpeechRecognition() {
               </CardContent>
             </Card>
 
-            {/* 快速操作 */}
+            {/* Quick actions */}
             <Card>
               <CardHeader>
-                <CardTitle>快速开始</CardTitle>
-                <CardDescription>开始新的语音转录</CardDescription>
+                <CardTitle>Get Started</CardTitle>
+                <CardDescription>Start a new speech transcription</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="flex gap-4 justify-center">
@@ -821,7 +821,7 @@ export default function SpeechRecognition() {
                         clipRule="evenodd"
                       />
                     </svg>
-                    <span className="text-lg font-medium">导入文件</span>
+                    <span className="text-lg font-medium">Import File</span>
                   </Button>
 
                   <Button
@@ -836,29 +836,28 @@ export default function SpeechRecognition() {
                         clipRule="evenodd"
                       />
                     </svg>
-                    <span className="text-lg font-medium text-white">开始录音</span>
+                    <span className="text-lg font-medium text-white">Start Recording</span>
                   </Button>
                 </div>
               </CardContent>
             </Card>
           </div>
         )}
-
         {currentView === "import" && (
           <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
             <div className="max-w-2xl w-full space-y-8">
               <div className="text-center space-y-4">
-                <h1 className="text-5xl font-bold text-gray-900">语音识别转录</h1>
-                <p className="text-xl text-gray-600">选择导入文件或直接录音进行转录</p>
+                <h1 className="text-5xl font-bold text-gray-900">Speech-to-Text Transcription</h1>
+                <p className="text-xl text-gray-600">Choose to import a file or record directly</p>
               </div>
 
-              {/* 简洁的选择方式卡片 */}
+              {/* Method selection card */}
               <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-xl">
                 <CardContent className="p-8">
                   <div className="space-y-6">
                     <div>
-                      <h2 className="text-2xl font-bold text-gray-900 mb-2">选择转录方式</h2>
-                      <p className="text-gray-600">您可以导入现有的音视频文件，或者直接录音进行转录</p>
+                      <h2 className="text-2xl font-bold text-gray-900 mb-2">Choose a method</h2>
+                      <p className="text-gray-600">You can import an existing audio/video file or record directly</p>
                     </div>
 
                     <div className="flex gap-6 justify-center">
@@ -903,46 +902,46 @@ export default function SpeechRecognition() {
         {currentView === "upload" && (
           <div className="max-w-4xl mx-auto space-y-6">
             <div className="text-center space-y-2">
-              <h1 className="text-4xl font-bold text-gray-900">导入文件转录</h1>
-              <p className="text-lg text-gray-600">上传视频或音频文件，自动转换为文字</p>
+              <h1 className="text-4xl font-bold text-gray-900">Import File Transcription</h1>
+              <p className="text-lg text-gray-600">Upload a video or audio file to convert to text</p>
             </div>
 
-            {/* 原有的文件上传功能 */}
+            {/* Upload */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <FileVideo className="h-5 w-5" />
-                  文件上传
+                  File Upload
                 </CardTitle>
-                <CardDescription>支持 MP4, AVI, MOV, MP3, WAV 等格式，最大文件大小 100MB</CardDescription>
+                <CardDescription>Supports MP4, AVI, MOV, MP3, WAV, max file size 100MB</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4 mb-6">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="language-select">选择语言</Label>
+                      <Label htmlFor="language-select">Language</Label>
                       <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
                         <SelectTrigger id="language-select">
-                          <SelectValue placeholder="选择转录语言" />
+                          <SelectValue placeholder="Select transcription language" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="auto">自动检测</SelectItem>
-                          <SelectItem value="zh">中文</SelectItem>
-                          <SelectItem value="en">英语</SelectItem>
-                          <SelectItem value="ja">日语</SelectItem>
-                          <SelectItem value="ko">韩语</SelectItem>
-                          <SelectItem value="fr">法语</SelectItem>
-                          <SelectItem value="de">德语</SelectItem>
-                          <SelectItem value="es">西班牙语</SelectItem>
-                          <SelectItem value="ru">俄语</SelectItem>
-                          <SelectItem value="ar">阿拉伯语</SelectItem>
-                          <SelectItem value="hi">印地语</SelectItem>
+                          <SelectItem value="auto">Auto Detect</SelectItem>
+                          <SelectItem value="zh">Chinese</SelectItem>
+                          <SelectItem value="en">English</SelectItem>
+                          <SelectItem value="ja">Japanese</SelectItem>
+                          <SelectItem value="ko">Korean</SelectItem>
+                          <SelectItem value="fr">French</SelectItem>
+                          <SelectItem value="de">German</SelectItem>
+                          <SelectItem value="es">Spanish</SelectItem>
+                          <SelectItem value="ru">Russian</SelectItem>
+                          <SelectItem value="ar">Arabic</SelectItem>
+                          <SelectItem value="hi">Hindi</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="extract-keypoints">智能分析</Label>
+                      <Label htmlFor="extract-keypoints">Smart Analysis</Label>
                       <div className="flex items-center space-x-2 h-10">
                         <Switch
                           id="extract-keypoints"
@@ -950,16 +949,16 @@ export default function SpeechRecognition() {
                           onCheckedChange={setExtractKeyPoints}
                         />
                         <Label htmlFor="extract-keypoints" className="text-sm text-gray-600">
-                          提取重点内容
+                          Extract key points
                         </Label>
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="generate-notes">生成笔记</Label>
+                      <Label htmlFor="generate-notes">Generate Notes</Label>
                       <div className="flex items-center space-x-2 h-10">
                         <Switch id="generate-notes" checked={generateNotes} onCheckedChange={setGenerateNotes} />
                         <Label htmlFor="generate-notes" className="text-sm text-gray-600">
-                          生成上课笔记
+                          Generate class notes
                         </Label>
                       </div>
                     </div>
@@ -973,8 +972,8 @@ export default function SpeechRecognition() {
                   onClick={() => fileInputRef.current?.click()}
                 >
                   <Upload className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-lg font-medium text-gray-700 mb-2">拖拽文件到此处或点击选择文件</p>
-                  <p className="text-sm text-gray-500">支持视频和音频文件</p>
+                  <p className="text-lg font-medium text-gray-700 mb-2">Drag files here or click to select</p>
+                  <p className="text-sm text-gray-500">Supports video and audio files</p>
                   <input
                     ref={fileInputRef}
                     type="file"
@@ -1004,10 +1003,10 @@ export default function SpeechRecognition() {
                           {isUploading ? (
                             <>
                               <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                              转录中...
+                              Transcribing...
                             </>
                           ) : (
-                            "开始转录"
+                            "Start Transcription"
                           )}
                         </Button>
                       </div>
@@ -1027,7 +1026,7 @@ export default function SpeechRecognition() {
                 {isUploading && (
                   <div className="mt-4">
                     <div className="flex justify-between text-sm text-gray-600 mb-2">
-                      <span>转录进度</span>
+                      <span>Transcription Progress</span>
                       <span>{uploadProgress}%</span>
                     </div>
                     <Progress value={uploadProgress} className="w-full" />
@@ -1042,19 +1041,18 @@ export default function SpeechRecognition() {
               </CardContent>
             </Card>
 
-            {/* 转录结果等其他卡片保持不变 */}
             {transcription && (
               <Card>
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div>
-                      <CardTitle>转录结果</CardTitle>
-                      <CardDescription>转录完成，共 {transcription.length} 个字符</CardDescription>
+                      <CardTitle>Transcription Result</CardTitle>
+                      <CardDescription>Completed, total {transcription.length} characters</CardDescription>
                     </div>
                     <div className="flex gap-2">
                       <Button onClick={handleDownload} variant="outline">
                         <Download className="h-4 w-4 mr-2" />
-                        下载文本
+                        Download Text
                       </Button>
                     </div>
                   </div>
@@ -1063,12 +1061,12 @@ export default function SpeechRecognition() {
                   <Textarea
                     value={transcription}
                     onChange={(e) => setTranscription(e.target.value)}
-                    placeholder="转录结果将显示在这里..."
+                    placeholder="Transcription will appear here..."
                     className="min-h-[300px] resize-none"
                   />
                   <div className="mt-4 flex justify-between text-sm text-gray-500">
-                    <span>您可以编辑上面的文本</span>
-                    <span>{transcription.split(/\s+/).length} 词</span>
+                    <span>You can edit the text above</span>
+                    <span>{transcription.split(/\s+/).length} words</span>
                   </div>
                 </CardContent>
               </Card>
@@ -1085,9 +1083,9 @@ export default function SpeechRecognition() {
                         clipRule="evenodd"
                       />
                     </svg>
-                    重点内容提取
+                    Key Points
                   </CardTitle>
-                  <CardDescription>AI智能分析提取的关键信息</CardDescription>
+                  <CardDescription>Key information extracted by AI</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
@@ -1112,9 +1110,9 @@ export default function SpeechRecognition() {
                             clipRule="evenodd"
                           />
                         </svg>
-                        上课笔记
+                        Class Notes
                       </CardTitle>
-                      <CardDescription>AI智能生成的结构化课堂笔记</CardDescription>
+                      <CardDescription>AI-generated structured class notes</CardDescription>
                     </div>
                     <Button
                       onClick={() => {
@@ -1131,7 +1129,7 @@ export default function SpeechRecognition() {
                       variant="outline"
                     >
                       <Download className="h-4 w-4 mr-2" />
-                      下载笔记
+                      Download Notes
                     </Button>
                   </div>
                 </CardHeader>
@@ -1146,12 +1144,9 @@ export default function SpeechRecognition() {
             )}
           </div>
         )}
-
-        {currentView === "record" && <RecordPage />}
-
         {currentView === "channel" && (
           <div className="max-w-6xl mx-auto h-full flex flex-col">
-            {/* 频道头部 */}
+            {/* Channel header */}
             <div className="bg-white border-b border-gray-200 p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <button onClick={() => setCurrentView("home")} className="p-2 hover:bg-gray-100 rounded-lg">
@@ -1166,7 +1161,7 @@ export default function SpeechRecognition() {
                 <div className="flex items-center gap-2">
                   <span className="text-gray-400">#</span>
                   <h1 className="text-xl font-bold text-gray-900">{selectedChannel}</h1>
-                  <span className="text-sm text-gray-500">• 12 成员</span>
+                  <span className="text-sm text-gray-500">• 12 members</span>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -1174,7 +1169,7 @@ export default function SpeechRecognition() {
                   <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
                   </svg>
-                  邀请成员
+                  Invite
                 </Button>
                 <Button variant="outline" size="sm">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -1188,22 +1183,22 @@ export default function SpeechRecognition() {
               </div>
             </div>
 
-            {/* 聊天消息区域 */}
+            {/* Chat area */}
             <div className="flex-1 bg-gray-50 p-4 overflow-y-auto">
               <div className="space-y-4">
-                {/* 示例消息 */}
+                {/* Example message */}
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
-                    <span className="text-white font-medium text-sm">张</span>
+                    <span className="text-white font-medium text-sm">Z</span>
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="font-medium text-gray-900">张三</span>
-                      <span className="text-xs text-gray-500">今天 14:30</span>
+                      <span className="font-medium text-gray-900">Zhang San</span>
+                      <span className="text-xs text-gray-500">Today 14:30</span>
                     </div>
                     <div className="bg-white p-3 rounded-lg shadow-sm">
                       <p className="text-gray-800">
-                        大家好！欢迎来到{selectedChannel}频道，我们可以在这里讨论相关话题。
+                        Hello everyone! Welcome to the {selectedChannel} channel. We can discuss relevant topics here.
                       </p>
                     </div>
                   </div>
@@ -1211,28 +1206,28 @@ export default function SpeechRecognition() {
 
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
-                    <span className="text-white font-medium text-sm">李</span>
+                    <span className="text-white font-medium text-sm">L</span>
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="font-medium text-gray-900">李四</span>
-                      <span className="text-xs text-gray-500">今天 14:32</span>
+                      <span className="font-medium text-gray-900">Li Si</span>
+                      <span className="text-xs text-gray-500">Today 14:32</span>
                     </div>
                     <div className="bg-white p-3 rounded-lg shadow-sm">
-                      <p className="text-gray-800">好的，我有一些想法想和大家分享。</p>
+                      <p className="text-gray-800">Okay, I have some ideas to share.</p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* 消息输入区域 */}
+            {/* Message input */}
             <div className="bg-white border-t border-gray-200 p-4">
               <div className="flex items-center gap-3">
                 <div className="flex-1 relative">
                   <input
                     type="text"
-                    placeholder={`在 #${selectedChannel} 中发送消息...`}
+                    placeholder={`Message #${selectedChannel}...`}
                     className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                   <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
@@ -1256,15 +1251,14 @@ export default function SpeechRecognition() {
                     </button>
                   </div>
                 </div>
-                <Button>发送</Button>
+                <Button>Send</Button>
               </div>
             </div>
           </div>
         )}
-
         {currentView === "dm" && (
           <div className="max-w-6xl mx-auto h-full flex flex-col">
-            {/* 私信头部 */}
+            {/* DM header */}
             <div className="bg-white border-b border-gray-200 p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <button onClick={() => setCurrentView("home")} className="p-2 hover:bg-gray-100 rounded-lg">
@@ -1282,7 +1276,7 @@ export default function SpeechRecognition() {
                   </div>
                   <div>
                     <h1 className="text-xl font-bold text-gray-900">{selectedDM}</h1>
-                    <span className="text-sm text-green-600">在线</span>
+                    <span className="text-sm text-green-600">Online</span>
                   </div>
                 </div>
               </div>
@@ -1291,21 +1285,21 @@ export default function SpeechRecognition() {
                   <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                   </svg>
-                  语音通话
+                  Voice Call
                 </Button>
                 <Button variant="outline" size="sm">
                   <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" />
                   </svg>
-                  视频通话
+                  Video Call
                 </Button>
               </div>
             </div>
 
-            {/* 私信消息区域 */}
+            {/* DM messages */}
             <div className="flex-1 bg-gray-50 p-4 overflow-y-auto">
               <div className="space-y-4">
-                {/* 示例私信消息 */}
+                {/* Example DM */}
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">
                     <span className="text-white font-medium text-sm">{selectedDM.charAt(0)}</span>
@@ -1313,10 +1307,10 @@ export default function SpeechRecognition() {
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="font-medium text-gray-900">{selectedDM}</span>
-                      <span className="text-xs text-gray-500">今天 15:20</span>
+                      <span className="text-xs text-gray-500">Today 15:20</span>
                     </div>
                     <div className="bg-white p-3 rounded-lg shadow-sm max-w-md">
-                      <p className="text-gray-800">你好！有时间聊聊项目的事情吗？</p>
+                      <p className="text-gray-800">Hi! Do you have time to talk about the project?</p>
                     </div>
                   </div>
                 </div>
@@ -1325,28 +1319,28 @@ export default function SpeechRecognition() {
                   <div className="flex-1 flex justify-end">
                     <div className="max-w-md">
                       <div className="flex items-center gap-2 mb-1 justify-end">
-                        <span className="text-xs text-gray-500">今天 15:22</span>
-                        <span className="font-medium text-gray-900">我</span>
+                        <span className="text-xs text-gray-500">Today 15:22</span>
+                        <span className="font-medium text-gray-900">Me</span>
                       </div>
                       <div className="bg-blue-500 text-white p-3 rounded-lg shadow-sm">
-                        <p>当然可以！我现在有空，我们可以讨论一下。</p>
+                        <p>Sure! I'm available now, we can discuss it.</p>
                       </div>
                     </div>
                   </div>
                   <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
-                    <span className="text-white font-medium text-sm">我</span>
+                    <span className="text-white font-medium text-sm">Me</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* 私信输入区域 */}
+            {/* DM input */}
             <div className="bg-white border-t border-gray-200 p-4">
               <div className="flex items-center gap-3">
                 <div className="flex-1 relative">
                   <input
                     type="text"
-                    placeholder={`给 ${selectedDM} 发送消息...`}
+                    placeholder={`Message ${selectedDM}...`}
                     className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                   <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
@@ -1370,7 +1364,7 @@ export default function SpeechRecognition() {
                     </button>
                   </div>
                 </div>
-                <Button>发送</Button>
+                <Button>Send</Button>
               </div>
             </div>
           </div>
@@ -1378,7 +1372,7 @@ export default function SpeechRecognition() {
 
         {currentView === "folder" && (
           <div className="max-w-6xl mx-auto space-y-6">
-            {/* 文件夹头部 */}
+            {/* Folder header */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -1401,10 +1395,10 @@ export default function SpeechRecognition() {
                         {(() => {
                           const folderFiles = getFolderFiles(selectedFolder)
                           return folderFiles.length
-                        })()} 个文件 • 总计 {(() => {
+                        })()} files • total {(() => {
                           const folderFiles = getFolderFiles(selectedFolder)
                           return folderFiles
-                            .reduce((total, file) => {
+                            .reduce((total: number, file: { size: string }) => {
                               const size = Number.parseFloat(file.size)
                               const unit = file.size.includes("MB") ? size : size / 1000
                               return total + unit
@@ -1424,7 +1418,7 @@ export default function SpeechRecognition() {
                         clipRule="evenodd"
                       />
                     </svg>
-                    上传文件
+                    Upload File
                   </Button>
                   <Button variant="outline">
                     <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -1435,17 +1429,17 @@ export default function SpeechRecognition() {
                         clipRule="evenodd"
                       />
                     </svg>
-                    新建文件夹
+                    New Folder
                   </Button>
                 </div>
               </div>
             </div>
 
-            {/* 文件列表 */}
+            {/* File list */}
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle>文件列表</CardTitle>
+                  <CardTitle>File List</CardTitle>
                   <div className="flex items-center gap-2">
                     <Button variant="outline" size="sm">
                       <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -1455,23 +1449,23 @@ export default function SpeechRecognition() {
                           clipRule="evenodd"
                         />
                       </svg>
-                      列表视图
+                      List View
                     </Button>
                     <Button variant="outline" size="sm">
                       <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                       </svg>
-                      网格视图
+                      Grid View
                     </Button>
                   </div>
                 </div>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {/* 根据不同文件夹显示不同的转录文件 */}
+                  {/* Render files for selected folder */}
                   {(() => {
                     const folderFiles = getFolderFiles(selectedFolder)
-                    return folderFiles.map((file, index) => (
+                    return folderFiles.map((file: { type: string; name: string; source: string; preview: string; date: string; duration: string; size: string }, index: number) => (
                       <div
                         key={index}
                         className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
@@ -1521,7 +1515,7 @@ export default function SpeechRecognition() {
                               <h3 className="font-semibold text-gray-900">{file.name}</h3>
                               <span
                                 className={`px-2 py-1 text-xs rounded-full ${
-                                  file.source === "录音" ? "bg-red-100 text-red-700" : "bg-blue-100 text-blue-700"
+                                  file.source === "Recording" ? "bg-red-100 text-red-700" : "bg-blue-100 text-blue-700"
                                 }`}
                               >
                                 {file.source}
@@ -1530,7 +1524,7 @@ export default function SpeechRecognition() {
                             <p className="text-sm text-gray-600 mb-2 line-clamp-2">{file.preview}</p>
                             <div className="flex items-center gap-4 text-xs text-gray-500">
                               <span>{file.date}</span>
-                              <span>时长: {file.duration}</span>
+                              <span>Duration: {file.duration}</span>
                               <span>{file.size}</span>
                             </div>
                           </div>
@@ -1545,11 +1539,11 @@ export default function SpeechRecognition() {
                                 clipRule="evenodd"
                               />
                             </svg>
-                            查看
+                            View
                           </Button>
                           <Button variant="outline" size="sm">
                             <Download className="w-4 w-4 mr-2" />
-                            下载
+                            Download
                           </Button>
                           <Button variant="outline" size="sm">
                             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">

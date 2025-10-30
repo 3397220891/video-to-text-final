@@ -66,7 +66,7 @@ export default function RecordPage() {
         setRecordingTime((prev) => prev + 1)
       }, 1000)
     } catch (err) {
-      setError("无法访问麦克风，请检查权限设置")
+      setError("Unable to access microphone. Please check permission settings.")
     }
   }
 
@@ -122,23 +122,23 @@ export default function RecordPage() {
       formData.append("extractKeyPoints", extractKeyPoints.toString())
       formData.append("generateNotes", generateNotes.toString())
 
-      // 模拟API调用
+      // Simulate API
       await new Promise((resolve) => setTimeout(resolve, 3000))
 
-      // 模拟转录结果
-      setTranscription("这是一段模拟的转录结果。在实际应用中，这里会显示真实的语音转录内容。")
+      // Simulated result
+      setTranscription("This is a simulated transcription result. In a real app, the actual speech-to-text content will be shown here.")
 
       if (extractKeyPoints) {
-        setKeyPoints("• 重点1：这是提取的第一个重点\n• 重点2：这是提取的第二个重点\n• 重点3：这是提取的第三个重点")
+        setKeyPoints("• Key 1: This is the first extracted key point\n• Key 2: This is the second extracted key point\n• Key 3: This is the third extracted key point")
       }
 
       if (generateNotes) {
         setClassNotes(
-          "# 课堂笔记\n\n## 主要内容\n1. 第一个要点\n2. 第二个要点\n3. 第三个要点\n\n## 总结\n这是课堂内容的总结。",
+          "# Class Notes\n\n## Main Content\n1. First point\n2. Second point\n3. Third point\n\n## Summary\nThis is a summary of the class content.",
         )
       }
     } catch (err) {
-      setError("转录失败，请重试")
+      setError("Transcription failed. Please try again.")
     } finally {
       setIsTranscribing(false)
     }
@@ -167,61 +167,61 @@ export default function RecordPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="text-center space-y-2">
-        <h1 className="text-4xl font-bold text-gray-900">语音录制</h1>
-        <p className="text-lg text-gray-600">录制语音并自动转换为文字</p>
+        <h1 className="text-4xl font-bold text-gray-900">Voice Recording</h1>
+        <p className="text-lg text-gray-600">Record speech and convert it to text</p>
       </div>
 
-      {/* 录音控制 */}
+      {/* Recording controls */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Mic className="h-5 w-5" />
-            录音控制
+            Recording Controls
           </CardTitle>
-          <CardDescription>点击开始录音，支持暂停和继续录制</CardDescription>
+          <CardDescription>Click to start recording. Pause and resume are supported.</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
-            {/* 设置选项 */}
+            {/* Settings */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="language-select">选择语言</Label>
+                <Label htmlFor="language-select">Language</Label>
                 <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
                   <SelectTrigger id="language-select">
-                    <SelectValue placeholder="选择转录语言" />
+                    <SelectValue placeholder="Select transcription language" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="auto">自动检测</SelectItem>
-                    <SelectItem value="zh">中文</SelectItem>
-                    <SelectItem value="en">英语</SelectItem>
-                    <SelectItem value="ja">日语</SelectItem>
-                    <SelectItem value="ko">韩语</SelectItem>
+                    <SelectItem value="auto">Auto Detect</SelectItem>
+                    <SelectItem value="zh">Chinese</SelectItem>
+                    <SelectItem value="en">English</SelectItem>
+                    <SelectItem value="ja">Japanese</SelectItem>
+                    <SelectItem value="ko">Korean</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="extract-keypoints">智能分析</Label>
+                <Label htmlFor="extract-keypoints">Smart Analysis</Label>
                 <div className="flex items-center space-x-2 h-10">
                   <Switch id="extract-keypoints" checked={extractKeyPoints} onCheckedChange={setExtractKeyPoints} />
                   <Label htmlFor="extract-keypoints" className="text-sm text-gray-600">
-                    提取重点内容
+                    Extract key points
                   </Label>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="generate-notes">生成笔记</Label>
+                <Label htmlFor="generate-notes">Generate Notes</Label>
                 <div className="flex items-center space-x-2 h-10">
                   <Switch id="generate-notes" checked={generateNotes} onCheckedChange={setGenerateNotes} />
                   <Label htmlFor="generate-notes" className="text-sm text-gray-600">
-                    生成上课笔记
+                    Generate class notes
                   </Label>
                 </div>
               </div>
             </div>
 
-            {/* 录音界面 */}
+            {/* Recording UI */}
             <div className="text-center space-y-6">
               <div className="text-6xl font-mono text-gray-900">{formatTime(recordingTime)}</div>
 
@@ -233,17 +233,17 @@ export default function RecordPage() {
                     className="bg-red-500 hover:bg-red-600 text-white px-8 py-4 text-lg"
                   >
                     <Mic className="h-6 w-6 mr-2" />
-                    开始录音
+                    Start Recording
                   </Button>
                 ) : (
                   <>
                     <Button onClick={pauseRecording} variant="outline" size="lg" className="px-8 py-4 text-lg">
                       {isPaused ? <Play className="h-6 w-6 mr-2" /> : <Pause className="h-6 w-6 mr-2" />}
-                      {isPaused ? "继续" : "暂停"}
+                      {isPaused ? "Resume" : "Pause"}
                     </Button>
                     <Button onClick={stopRecording} variant="destructive" size="lg" className="px-8 py-4 text-lg">
                       <Square className="h-6 w-6 mr-2" />
-                      停止录音
+                      Stop Recording
                     </Button>
                   </>
                 )}
@@ -253,30 +253,30 @@ export default function RecordPage() {
                 <div className="flex justify-center">
                   <div className="flex items-center gap-2 text-red-500">
                     <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-                    <span className="text-sm font-medium">{isPaused ? "录音已暂停" : "正在录音..."}</span>
+                    <span className="text-sm font-medium">{isPaused ? "Recording paused" : "Recording..."}</span>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* 录音回放 */}
+            {/* Playback */}
             {audioBlob && (
               <div className="border-t pt-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold">录音回放</h3>
+                  <h3 className="text-lg font-semibold">Playback</h3>
                   <div className="flex gap-2">
                     <Button variant="outline" onClick={playRecording}>
                       {isPlaying ? <Pause className="h-4 w-4 mr-2" /> : <Play className="h-4 w-4 mr-2" />}
-                      {isPlaying ? "暂停" : "播放"}
+                      {isPlaying ? "Pause" : "Play"}
                     </Button>
                     <Button onClick={transcribeAudio} disabled={isTranscribing}>
                       {isTranscribing ? (
                         <>
                           <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                          转录中...
+                          Transcribing...
                         </>
                       ) : (
-                        "开始转录"
+                        "Start Transcription"
                       )}
                     </Button>
                   </div>
@@ -299,18 +299,18 @@ export default function RecordPage() {
         </CardContent>
       </Card>
 
-      {/* 转录结果 */}
+      {/* Transcription result */}
       {transcription && (
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle>转录结果</CardTitle>
-                <CardDescription>录音转录完成</CardDescription>
+                <CardTitle>Transcription Result</CardTitle>
+                <CardDescription>Recording transcription completed</CardDescription>
               </div>
               <Button onClick={downloadTranscription} variant="outline">
                 <Download className="h-4 w-4 mr-2" />
-                下载文本
+                Download Text
               </Button>
             </div>
           </CardHeader>
@@ -324,7 +324,7 @@ export default function RecordPage() {
         </Card>
       )}
 
-      {/* 重点内容 */}
+      {/* Key Points */}
       {keyPoints && (
         <Card>
           <CardHeader>
@@ -336,7 +336,7 @@ export default function RecordPage() {
                   clipRule="evenodd"
                 />
               </svg>
-              重点内容提取
+              Key Points
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -347,7 +347,7 @@ export default function RecordPage() {
         </Card>
       )}
 
-      {/* 课堂笔记 */}
+      {/* Class Notes */}
       {classNotes && (
         <Card>
           <CardHeader>
@@ -359,7 +359,7 @@ export default function RecordPage() {
                   clipRule="evenodd"
                 />
               </svg>
-              上课笔记
+              Class Notes
             </CardTitle>
           </CardHeader>
           <CardContent>
